@@ -1,0 +1,154 @@
+<template>
+	<view>
+		<view class="function">
+			<uni-grid :column="4" :showBorder="false" :highlight="true" @change="change">
+				<uni-grid-item v-for="(item, index) in list" :index="index" :key="index">
+					<view class="grid-item-box" style="background-color: #fff;">
+						<image :src="item.url" class="image" mode="aspectFill" />
+						<text class="text">{{item.text}}</text>
+					</view>
+				</uni-grid-item>
+			</uni-grid>
+		</view>
+		<view class="uni-margin-wrap">
+			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
+				:duration="duration">
+				<swiper-item>
+					<view class="swiper-item">
+						<image :src="image1" mode="aspectFill" />
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="swiper-item">
+						<image :src="image2" mode="aspectFill" />
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="swiper-item">
+						<image :src="image3" mode="aspectFill" />
+					</view>
+				</swiper-item>
+			</swiper>
+		</view>
+		<view class="noticeList">
+			<uni-notice-bar show-icon scrollable text="下面是社区的通知公告,请注意查看!" />
+			<uni-list v-for="(notice, index) in noticeList" :key="index">
+				<uni-list-item :title="notice.info" >
+				</uni-list-item>
+				<uni-dateformat :date="notice.time" style="margin-left: 15px; margin-bottom: 10px;"></uni-dateformat>
+			</uni-list>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				list: [
+					{
+						text: '物业费',
+						url: '/static/images/fee.png'
+					},
+					{
+						text: '服务请求',
+						url: '/static/images/request.png'
+					}
+				],
+				indicatorDots: true,
+				autoplay: true,
+				interval: 2000,
+				duration: 500,
+				image1: '/static/images/swiper1.jpg',
+				image2: '/static/images/swiper2.jpeg',
+				image3: '/static/images/swiper3.jpeg',
+				noticeList: [],
+			}
+		},
+		onLoad() {
+			const db = uniCloud.database()
+			db.collection('notice').get().then((res)=>{
+				if (res.result.data === undefined) {
+					this.noticeList = ['无消息通知']
+				} else {
+					let len = res.result.data.length
+					for (let i = 0; i < len; i++) {
+						this.$set(this.noticeList, i, {
+							info: res.result.data[i].info,
+							time: res.result.data[i].time})
+					}
+				}
+			}).catch((err)=>{
+				console.log(err.code)
+				console.log(err.message)
+			})
+		},
+		methods: {
+			change(e) {
+				let {index} = e.detail
+				if (index === 0) {
+					uni.navigateTo({
+						url: '/pages/user/fee/fee'
+					})
+				} else if (index === 1) {
+					uni.navigateTo({
+						url: '/pages/user/request/request'
+					})
+				}
+			}
+		}
+	}
+</script>
+
+<style lang="scss">
+	.function {
+		margin-top: 10px;
+		background-color: white;
+		height: 100px;
+	}
+	
+	.image {
+		width: 45px;
+		height: 45px;
+	}
+
+	.text {
+		font-size: 15px;
+		margin-top: 5px;
+	}
+	
+	.grid-item-box {
+		flex: 1;
+		// position: relative;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 15px 0;
+	}
+	
+	.uni-margin-wrap {
+		width: 100%;
+		margin-top: 10px;
+	}
+	
+	.swiper {
+		height: 350rpx;
+	}
+	
+	.swiper-item {
+		display: block;
+		height: 350rpx;
+		line-height: 350rpx;
+		text-align: center;
+	}
+	
+	.noticeList {
+		margin-top: 10px;
+		width: 100%;
+	}
+</style>
+
+

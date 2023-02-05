@@ -1,0 +1,23 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"info": {
+			"bsonType": "string",
+			"title": "消息通知"
+		},
+		"time": {
+			"bsonType": "timestamp",
+			"title": "时间"
+		}
+	}
+}

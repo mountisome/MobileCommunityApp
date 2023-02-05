@@ -1,0 +1,114 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+            "path" : "pages/user/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "业主登录",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+		{
+			"path": "pages/user/index/index",
+			"style": {
+				"navigationBarTitleText": "掌上社区"
+			}
+		},
+		{
+            "path" : "pages/user/person/person",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "个人主页",
+                "enablePullDownRefresh": true
+            }
+            
+        }
+        ,{
+            "path" : "pages/user/register/register",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "注册",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/user/userInfo/userInfo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/user/changePwd/changePwd",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/admin/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "物业登录",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/market/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "市场登录",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/user/fee/fee",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "物业费",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/user/request/request",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "服务请求",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#00aa00",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"list": [
+			{
+				"text": "首页",
+				"pagePath": "pages/user/index/index",
+				"iconPath": "static/images/tabbar/home.png",
+				"selectedIconPath": "static/images/tabbar/home_.png"
+			},
+			{
+				"text": "我的",
+				"pagePath": "pages/user/person/person",
+				"iconPath": "static/images/tabbar/mine.png",
+				"selectedIconPath": "static/images/tabbar/mine_.png"
+			}
+		]
+	},
+	"uniIdRouter": {}
+}
