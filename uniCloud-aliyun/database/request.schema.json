@@ -1,0 +1,40 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"name": {
+			"bsonType": "string",
+			"title": "用户名"
+		},
+		"requestContent": {
+			"bsonType": "string",
+			"title": "请求的内容"
+		},
+		"requestTime": {
+			"bsonType": "timestamp",
+			"title": "请求的时间"
+		},
+		"solved": {
+			"bsonType": "bool",
+			"title": "判断是否解决"
+		},
+		"responseContent": {
+			"bsonType": "string",
+			"title": "请求的回复"
+		},
+		"responseTime": {
+			"bsonType": "timestamp",
+			"title": "回复的时间"
+		}
+	}
+}
