@@ -3,7 +3,7 @@
 		<view class="login-form-content">
 			<view class="input-item flex align-center">
 				<view class="iconfont icon-user icon"></view>
-				<input v-model="loginForm.username" class="input" type="text" placeholder="请输入账号" maxlength="30" />
+				<input v-model="loginForm.adminname" class="input" type="text" placeholder="请输入账号" maxlength="30" />
 			</view>
 			<view class="input-item flex align-center">
 				<view class="iconfont icon-password icon"></view>
@@ -25,7 +25,7 @@
 		data() {
 			return {
 				loginForm: {
-				  username: '',
+				  adminname: '',
 				  password: ''
 				},
 				pwd: ''
@@ -34,7 +34,7 @@
 		methods: {
 			// 登录方法
 			handleLogin() {
-				if (this.loginForm.username === '') {
+				if (this.loginForm.adminname === '') {
 					uni.showToast({
 						title: '账号不能为空',
 						icon: 'error'
@@ -46,10 +46,10 @@
 					})
 				} else {
 					const db = uniCloud.database()
-					db.collection('user').where({name: this.loginForm.username}).get().then((res)=>{
-						if (res.result.data[0].password === undefined) {
+					db.collection('admin').where({name: this.loginForm.adminname}).get().then((res)=>{
+						if (res.result.data[0] === undefined) {
 							uni.showToast({
-								title: '用户不存在',
+								title: '物业不存在',
 								icon: 'error'
 							})
 						} else {
@@ -61,15 +61,19 @@
 								})
 							} else {
 								uni.setStorage({
-									key: 'username',
-									data: this.loginForm.username
+									key: 'adminname',
+									data: this.loginForm.adminname
+								})
+								uni.setStorage({
+									key: 'identity',
+									data: 'admin'
 								})
 								uni.showToast({
 									title: '登录成功',
 									icon: 'success'
 								})
 								uni.switchTab({
-									url: '/pages/user/index/index'
+									url: '/pages/index/index'
 								})
 							}
 						}

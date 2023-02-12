@@ -1,12 +1,11 @@
 <template>
-	<view>
+	<view v-if="identity === 'user'">
 		<view class="user-container bg-white flex flex-direction align-center">
 			<view class="cu-avatar xl round margin-left lage-avatar" :style="'background-image:url('+image+');'" @click="changeImage"></view>
 			<view class="margin-top">
 				<text>{{username}}</text>
 			</view>
 		</view>
-		
 		<view class="margin-top">
 			<view class="cu-list menu">
 				<view class="cu-item arrow" @tap="userInfo">
@@ -22,8 +21,7 @@
 					</view>
 				</view>
 			</view>
-		</view>
-		
+		</view>	
 		<view class="margin-top">
 			<view class="cu-list menu">
 				<view class="cu-item " @tap="logout">
@@ -34,6 +32,10 @@
 			</view>
 		</view>
 	</view>
+	
+	<view v-else-if="identity === 'admin'">
+		
+	</view>
 </template>
 
 <script>
@@ -41,10 +43,12 @@
 		data() {
 			return {
 				username: 'user',
-				image: '/static/images/user.png'
+				image: '/static/images/user.png',
+				identity: ''
 			}
 		},
 		onLoad() {
+			this.identity = uni.getStorageSync('identity')
 			if (uni.getStorageSync('username') !== '') {
 				this.username = uni.getStorageSync('username')
 				this.image = uni.getStorageSync('image')
@@ -118,7 +122,7 @@
 			// 退出登录
 			logout() {
 				uni.navigateTo({
-					url: '/pages/login/login'
+					url: '/pages/user/login/login'
 				})
 			}
 		}

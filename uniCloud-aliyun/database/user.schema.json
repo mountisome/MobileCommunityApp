@@ -26,6 +26,10 @@
 		"image": {
 			"bsonType": "string",
 			"title": "用户头像"
+		},
+		"community": {
+			"bsonType": "string",
+			"title": "小区名"
 		}
 	}
 }

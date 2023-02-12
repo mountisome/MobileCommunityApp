@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<uni-section class="mb-10" title="已解决" type="line">
-			<uni-collapse  accordion v-model="accordionVal" v-for="(request, index) in solvedRequest">
+			<uni-collapse accordion v-for="(request, index) in solvedRequest">
 				<uni-collapse-item :title="'请求'+(index+1)">
 					<uni-card title="请求:" :thumbnail="image1">
 						<text>{{request.requestContent}}</text>
@@ -39,7 +39,7 @@
 	<view>
 		<uni-section class="mb-10" title="提出请求" padding>
 			<uni-easyinput type="textarea" v-model="value" placeholder="请输入内容"></uni-easyinput>
-			<button type="primary" plain="true" size="mini" @click="submitRequest()">提交</button>
+			<button class="btn-submit" type="primary" plain="true" size="mini" @click="submitRequest()">提交</button>
 		</uni-section>
 	</view>
 </template>
@@ -48,7 +48,6 @@
 	export default {
 		data() {
 			return {
-				accordionVal: '',
 				image1: '',
 				image2: '/static/images/user.png',
 				value: '',
@@ -133,5 +132,9 @@
 	
 	.content {
 		padding: 15px;
+	}
+	
+	.btn-submit {
+		margin-top: 5px;
 	}
 </style>

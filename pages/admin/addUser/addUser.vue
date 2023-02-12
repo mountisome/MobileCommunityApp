@@ -15,7 +15,7 @@
 					<input v-model="phone" class="input" type="number" placeholder="请输入手机号" maxlength="30" />
 				</view>
 				<view class="action-btn">
-					<button @click="handleRegister" class="register-btn cu-btn block bg-blue lg round">注册</button>
+					<button @click="addUser" class="register-btn cu-btn block bg-blue lg round">添加</button>
 				</view>
 			</view>
 		</view>
@@ -32,8 +32,7 @@
 			}
 		},
 		methods: {
-			// 注册方法
-			handleRegister() {
+			addUser() {
 				if (this.username === '') {
 					uni.showToast({
 						title: '账号不能为空',
@@ -66,14 +65,14 @@
 								community: "A小区"
 							}).then((res) => {
 								uni.showToast({
-									title: '注册成功',
+									title: '成功添加新用户',
 									icon: 'success'
 								})
 								uni.navigateBack()
 							}).catch((err) => {
 								console.log(err.message)
 								uni.showToast({
-									title: '注册失败',
+									title: '添加失败',
 									icon: 'error'
 								})
 							})

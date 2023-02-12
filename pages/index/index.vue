@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view v-if="identity === 'user'">
 		<view class="function">
 			<uni-grid :column="4" :showBorder="false" :highlight="true" @change="change">
 				<uni-grid-item v-for="(item, index) in list" :index="index" :key="index">
@@ -39,12 +39,46 @@
 			</uni-list>
 		</view>
 	</view>
+	
+	<view v-else-if="identity === 'admin'">
+		<view class="function">
+			<uni-grid :column="4" :showBorder="false" :highlight="true" @change="change">
+				<uni-grid-item v-for="(item, index) in list2" :index="index" :key="index">
+					<view class="grid-item-box" style="background-color: #fff;">
+						<image :src="item.url" class="image" mode="aspectFill" />
+						<text class="text">{{item.text}}</text>
+					</view>
+				</uni-grid-item>
+			</uni-grid>
+		</view>
+		<view class="uni-margin-wrap">
+			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
+				:duration="duration">
+				<swiper-item>
+					<view class="swiper-item">
+						<image :src="image1" mode="aspectFill" />
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="swiper-item">
+						<image :src="image2" mode="aspectFill" />
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="swiper-item">
+						<image :src="image3" mode="aspectFill" />
+					</view>
+				</swiper-item>
+			</swiper>
+		</view>
+	</view>
 </template>
 
 <script>
 	export default {
 		data() {
 			return {
+				identity: '',
 				list: [
 					{
 						text: '物业费',
@@ -53,7 +87,25 @@
 					{
 						text: '服务请求',
 						url: '/static/images/request.png'
+					},
+					{
+						text: '配送商品',
+						url: '/static/images/delivery.png'
 					}
+				],
+				list2: [
+					{
+						text: '业主信息',
+						url: '/static/images/userManage.png'
+					},
+					{
+						text: '房屋信息',
+						url: '/static/images/houseManage.png'
+					},
+					{
+						text: '服务请求',
+						url: '/static/images/requestHandle.png'
+					},
 				],
 				indicatorDots: true,
 				autoplay: true,
@@ -66,6 +118,7 @@
 			}
 		},
 		onLoad() {
+			this.identity = uni.getStorageSync('identity')
 			const db = uniCloud.database()
 			db.collection('notice').get().then((res)=>{
 				if (res.result.data === undefined) {
@@ -86,14 +139,34 @@
 		methods: {
 			change(e) {
 				let {index} = e.detail
-				if (index === 0) {
-					uni.navigateTo({
-						url: '/pages/user/fee/fee'
-					})
-				} else if (index === 1) {
-					uni.navigateTo({
-						url: '/pages/user/request/request'
-					})
+				if (this.identity === 'user') {
+					if (index === 0) {
+						uni.navigateTo({
+							url: '/pages/user/fee/fee'
+						})
+					} else if (index === 1) {
+						uni.navigateTo({
+							url: '/pages/user/request/request'
+						})
+					} else if (index === 2) {
+						uni.navigateTo({
+							url: '/pages/user/delivery/delivery'
+						})
+					}
+				} else if (this.identity === 'admin') {
+					if (index === 0) {
+						uni.navigateTo({
+							url: '/pages/admin/userManage/userManage'
+						})
+					} else if (index === 1) {
+						uni.navigateTo({
+							url: '/pages/admin/houseManage/houseManage'
+						})
+					} else if (index === 2) {
+						uni.navigateTo({
+							url: '/pages/admin/requestHandle/requestHandle'
+						})
+					}
 				}
 			}
 		}

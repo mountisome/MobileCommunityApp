@@ -51,7 +51,7 @@
 				} else {
 					const db = uniCloud.database()
 					db.collection('user').where({name: this.loginForm.username}).get().then((res)=>{
-						if (res.result.data[0].password === undefined) {
+						if (res.result.data[0] === undefined) {
 							uni.showToast({
 								title: '用户不存在',
 								icon: 'error'
@@ -69,15 +69,31 @@
 									data: this.loginForm.username
 								})
 								uni.setStorage({
+									key: 'password',
+									data: res.result.data[0].password
+								})
+								uni.setStorage({
 									key: 'image',
 									data: res.result.data[0].image
+								})
+								uni.setStorage({
+									key: 'phone',
+									data: res.result.data[0].phone
+								})
+								uni.setStorage({
+									key: 'community',
+									data: res.result.data[0].community
+								})
+								uni.setStorage({
+									key: 'identity',
+									data: 'user'
 								})
 								uni.showToast({
 									title: '登录成功',
 									icon: 'success'
 								})
 								uni.switchTab({
-									url: '/pages/user/index/index'
+									url: '/pages/index/index'
 								})
 							}
 						}
