@@ -51,7 +51,7 @@
 				} else {
 					const db = uniCloud.database();
 					db.collection('user').where({name: this.username}).get().then((res)=>{
-						if (res.result.data[0] !== undefined) {
+						if (res.result.data[0] !== undefined || this.username === "ALL") {
 							uni.showToast({
 								title: '用户已存在',
 								icon: 'error'
@@ -62,7 +62,8 @@
 								password: this.password,
 								phone: this.phone,
 								image: "",
-								community: "A小区"
+								community: "A小区",
+								fee: 0
 							}).then((res) => {
 								uni.showToast({
 									title: '成功添加新用户',

@@ -132,6 +132,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/admin/fee/fee",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "物业收费",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

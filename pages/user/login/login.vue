@@ -85,6 +85,10 @@
 									data: res.result.data[0].community
 								})
 								uni.setStorage({
+									key: 'fee',
+									data: res.result.data[0].fee
+								})
+								uni.setStorage({
 									key: 'identity',
 									data: 'user'
 								})

@@ -32,8 +32,16 @@
 		</view>
 		<view class="noticeList">
 			<uni-notice-bar show-icon scrollable text="下面是社区的通知公告,请注意查看!" />
+			<uni-list v-for="(notice, index) in importantNoticeList" :key="index">
+				<uni-list-item>
+					<template v-slot:header>
+						<text class="importantInfo">{{notice.info}}!!</text>
+					</template>
+				</uni-list-item>
+				<uni-dateformat :date="notice.time" style="margin-left: 15px; margin-bottom: 10px;"></uni-dateformat>
+			</uni-list>
 			<uni-list v-for="(notice, index) in noticeList" :key="index">
-				<uni-list-item :title="notice.info" >
+				<uni-list-item :title="notice.info">
 				</uni-list-item>
 				<uni-dateformat :date="notice.time" style="margin-left: 15px; margin-bottom: 10px;"></uni-dateformat>
 			</uni-list>
@@ -71,6 +79,14 @@
 				</swiper-item>
 			</swiper>
 		</view>
+		<view class="noticeList">
+			<uni-notice-bar show-icon scrollable text="下面是社区的通知公告,请注意查看!" />
+			<uni-list v-for="(notice, index) in adminNoticeList" :key="index">
+				<uni-list-item :title="notice.info">
+				</uni-list-item>
+				<uni-dateformat :date="notice.time" style="margin-left: 15px; margin-bottom: 10px;"></uni-dateformat>
+			</uni-list>
+		</view>
 	</view>
 </template>
 
@@ -106,6 +122,10 @@
 						text: '服务请求',
 						url: '/static/images/requestHandle.png'
 					},
+					{
+						text: '物业收费',
+						url: '/static/images/fee2.png'
+					}
 				],
 				indicatorDots: true,
 				autoplay: true,
@@ -114,22 +134,45 @@
 				image1: '/static/images/swiper1.jpg',
 				image2: '/static/images/swiper2.jpeg',
 				image3: '/static/images/swiper3.jpeg',
+				importantNoticeList: [],
 				noticeList: [],
+				adminNoticeList: []
 			}
 		},
 		onLoad() {
 			this.identity = uni.getStorageSync('identity')
+			let username = uni.getStorageSync('username')
+			let adminname = uni.getStorageSync('adminname')
 			const db = uniCloud.database()
 			db.collection('notice').get().then((res)=>{
 				if (res.result.data === undefined) {
 					this.noticeList = ['无消息通知']
 				} else {
 					let len = res.result.data.length
+					let importantNoticeList2 = []
+					let noticeList2 = []
+					let adminNoticeList2 = []
 					for (let i = 0; i < len; i++) {
-						this.$set(this.noticeList, i, {
-							info: res.result.data[i].info,
-							time: res.result.data[i].time})
+						if (res.result.data[i].name === username) {
+							importantNoticeList2.push({
+								info: res.result.data[i].info,
+								time: res.result.data[i].time
+							})
+						} else if (res.result.data[i].name === 'ALL') {
+							noticeList2.push({
+								info: res.result.data[i].info,
+								time: res.result.data[i].time
+							})
+						} else if (res.result.data[i].name === 'admin') {
+							adminNoticeList2.push({
+								info: res.result.data[i].info,
+								time: res.result.data[i].time
+							})
+						}
 					}
+					this.importantNoticeList = importantNoticeList2
+					this.noticeList = noticeList2
+					this.adminNoticeList = adminNoticeList2
 				}
 			}).catch((err)=>{
 				console.log(err.code)
@@ -165,6 +208,10 @@
 					} else if (index === 2) {
 						uni.navigateTo({
 							url: '/pages/admin/requestHandle/requestHandle'
+						})
+					} else if (index === 3) {
+						uni.navigateTo({
+							url: '/pages/admin/fee/fee'
 						})
 					}
 				}
@@ -221,6 +268,11 @@
 	.noticeList {
 		margin-top: 10px;
 		width: 100%;
+	}
+	
+	.importantInfo {
+		font-weight: bold;
+		color: darkred;
 	}
 </style>
 

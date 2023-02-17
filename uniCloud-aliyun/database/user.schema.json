@@ -30,6 +30,10 @@
 		"community": {
 			"bsonType": "string",
 			"title": "小区名"
+		},
+		"fee": {
+			"bsonType": "int",
+			"title": "物业费"
 		}
 	}
 }

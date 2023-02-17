@@ -44,28 +44,36 @@
 				})
 			},
 			deleteUser(username) {
-				const db = uniCloud.database()
-				db.collection('user').where({
-					name: username
-				}).remove().then((res)=>{
-					uni.showToast({
-						title: '用户删除成功',
-						icon: 'success'
-					})
-					db.collection('user').get().then((res)=>{
-						let userList2 = []
-						let len = res.result.data.length
-						for (let i = 0; i < len; i++) {
-							this.$set(userList2, i, {
-								name: res.result.data[i].name,
-								phone: res.result.data[i].phone,
-								image: res.result.data[i].image})
+				uni.showModal({
+					title: '提示',
+					content: '确认删除？',
+					success:function(res){
+						if (res.confirm) {
+							const db = uniCloud.database()
+							db.collection('user').where({
+								name: username
+							}).remove().then((res)=>{
+								uni.showToast({
+									title: '用户删除成功',
+									icon: 'success'
+								})
+								db.collection('user').get().then((res)=>{
+									let userList2 = []
+									let len = res.result.data.length
+									for (let i = 0; i < len; i++) {
+										this.$set(userList2, i, {
+											name: res.result.data[i].name,
+											phone: res.result.data[i].phone,
+											image: res.result.data[i].image})
+									}
+									this.userList = userList2
+								})
+							}).catch((err)=>{
+								console.log(err.code)
+								console.log(err.message)
+							})
 						}
-						this.userList = userList2
-					})
-				}).catch((err)=>{
-					console.log(err.code)
-					console.log(err.message)
+					}
 				})
 			},
 			callPhone(phone) {

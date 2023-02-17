@@ -18,6 +18,10 @@
 		"time": {
 			"bsonType": "timestamp",
 			"title": "时间"
+		},
+		"name": {
+			"bsonType": "string",
+			"title": "告知者"
 		}
 	}
 }
