@@ -1,3 +1,4 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
 {
 	"bsonType": "object",
 	"required": [],
@@ -11,33 +12,25 @@
 		"_id": {
 			"description": "ID，系统自动生成"
 		},
-		"name": {
+		"phone": {
 			"bsonType": "string",
-			"title": "用户名"
+			"title": "手机号"
 		},
 		"password": {
 			"bsonType": "string",
 			"title": "密码"
 		},
-		"phone": {
+		"name": {
 			"bsonType": "string",
-			"title": "手机号"
+			"title": "市场名"
 		},
 		"image": {
 			"bsonType": "string",
 			"title": "用户头像"
 		},
-		"community": {
+		"address": {
 			"bsonType": "string",
-			"title": "小区名"
-		},
-		"building": {
-			"bsonType": "string",
-			"title": "楼号"
-		},
-		"fee": {
-			"bsonType": "int",
-			"title": "物业费"
+			"title": "地址"
 		}
 	}
 }

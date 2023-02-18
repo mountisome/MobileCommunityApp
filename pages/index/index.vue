@@ -49,7 +49,7 @@
 	</view>
 	
 	<view v-else-if="identity === 'admin'">
-		<view class="function">
+		<view class="function2">
 			<uni-grid :column="4" :showBorder="false" :highlight="true" @change="change">
 				<uni-grid-item v-for="(item, index) in list2" :index="index" :key="index">
 					<view class="grid-item-box" style="background-color: #fff;">
@@ -80,13 +80,17 @@
 			</swiper>
 		</view>
 		<view class="noticeList">
-			<uni-notice-bar show-icon scrollable text="下面是社区的通知公告,请注意查看!" />
+			<uni-notice-bar show-icon scrollable text="下面是用户的通知,请注意查看!" />
 			<uni-list v-for="(notice, index) in adminNoticeList" :key="index">
 				<uni-list-item :title="notice.info">
 				</uni-list-item>
 				<uni-dateformat :date="notice.time" style="margin-left: 15px; margin-bottom: 10px;"></uni-dateformat>
 			</uni-list>
 		</view>
+	</view>
+	
+	<view v-else-if="identity === 'market'">
+		
 	</view>
 </template>
 
@@ -125,6 +129,10 @@
 					{
 						text: '物业收费',
 						url: '/static/images/fee2.png'
+					},
+					{
+						text: '通知发布',
+						url: '/static/images/notice.png'
 					}
 				],
 				indicatorDots: true,
@@ -213,6 +221,10 @@
 						uni.navigateTo({
 							url: '/pages/admin/fee/fee'
 						})
+					} else if (index === 4) {
+						uni.navigateTo({
+							url: '/pages/admin/notice/notice'
+						})
 					}
 				}
 			}
@@ -225,6 +237,12 @@
 		margin-top: 10px;
 		background-color: white;
 		height: 100px;
+	}
+	
+	.function2 {
+		margin-top: 10px;
+		background-color: white;
+		height: 195px;
 	}
 	
 	.image {

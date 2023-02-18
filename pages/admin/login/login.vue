@@ -65,8 +65,20 @@
 									data: this.loginForm.adminname
 								})
 								uni.setStorage({
+									key: 'password2',
+									data: res.result.data[0].password
+								})
+								uni.setStorage({
 									key: 'identity',
 									data: 'admin'
+								})
+								uni.setStorage({
+									key: 'phone',
+									data: res.result.data[0].phone
+								})
+								uni.setStorage({
+									key: 'community',
+									data: res.result.data[0].community
 								})
 								uni.showToast({
 									title: '登录成功',

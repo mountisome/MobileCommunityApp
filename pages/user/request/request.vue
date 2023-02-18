@@ -37,7 +37,7 @@
 		</uni-section>
 	</view>
 	<view>
-		<uni-section class="mb-10" title="提出请求" padding>
+		<uni-section title="提出请求" padding titleFontSize="16px" type="square">
 			<uni-easyinput type="textarea" v-model="value" placeholder="请输入内容"></uni-easyinput>
 			<button class="btn-submit" type="primary" plain="true" size="mini" @click="submitRequest()">提交</button>
 		</uni-section>

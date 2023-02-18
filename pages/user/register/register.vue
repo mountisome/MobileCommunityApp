@@ -64,6 +64,7 @@
 								phone: this.phone,
 								image: "",
 								community: "A小区",
+								building: "1幢",
 								fee: 0
 							}).then((res) => {
 								uni.showToast({

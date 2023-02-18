@@ -1,10 +1,9 @@
 <template>
 	<view>
 		<uni-list>
-			<uni-list-item title="用户名" :rightText="username"></uni-list-item>
+			<uni-list-item title="物业名" :rightText="adminname"></uni-list-item>
 			<uni-list-item title="手机号" :rightText="phone"></uni-list-item>
 			<uni-list-item title="小区名" :rightText="community"></uni-list-item>
-			<uni-list-item title="楼号" :rightText="building"></uni-list-item>
 		</uni-list>
 	</view>
 </template>
@@ -13,18 +12,16 @@
 	export default {
 		data() {
 			return {
-				username: '',
+				adminname: '',
 				phone: '',
-				community: '',
-				building: ''
-			}
+				community: ''
+			};
 		},
 		onLoad() {
-			if (uni.getStorageSync('username') !== '') {
-				this.username = uni.getStorageSync('username')
+			if (uni.getStorageSync('adminname') !== '') {
+				this.adminname = uni.getStorageSync('adminname')
 				this.phone = uni.getStorageSync('phone')
 				this.community = uni.getStorageSync('community')
-				this.building = uni.getStorageSync('building')
 			}
 		},
 		methods: {
@@ -33,6 +30,6 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 
 </style>

@@ -20,8 +20,8 @@
 	export default {
 		data() {
 			return {
-				username: '',
-				password: '',
+				adminname: '',
+				password2: '',
 				oldPassword: '',
 				newPassword: '',
 				newPassword2: ''
@@ -46,8 +46,8 @@
 					})
 				} else {
 					const db = uniCloud.database()
-					db.collection('user').where({
-					    name: this.username
+					db.collection('admin').where({
+					    name: this.adminname
 					}).update({
 					    password: this.newPassword
 					}).catch((err)=>{
@@ -59,14 +59,14 @@
 						icon: 'success'
 					})
 					uni.navigateTo({
-						url: '/pages/user/login/login'
+						url: '/pages/admin/login/login'
 					})
 				}
 			}
 		},
 		onLoad() {
-			this.username = uni.getStorageSync('username')
-			this.password = uni.getStorageSync('password')
+			this.adminname = uni.getStorageSync('adminname')
+			this.password2 = uni.getStorageSync('password2')
 		}
 	}
 </script>

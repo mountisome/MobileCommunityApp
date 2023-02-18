@@ -141,6 +141,33 @@
             }
             
         }
+        ,{
+            "path" : "pages/admin/notice/notice",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "通知发布",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/admin/adminInfo/adminInfo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "物业信息",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+		,{
+            "path" : "pages/admin/changePwd/changePwd",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "修改密码",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

@@ -22,6 +22,10 @@
 		"phone": {
 			"bsonType": "string",
 			"title": "手机号"
+		},
+		"community": {
+			"bsonType": "string",
+			"title": "小区名"
 		}
 	}
 }

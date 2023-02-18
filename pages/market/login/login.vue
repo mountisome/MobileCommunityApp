@@ -3,7 +3,7 @@
 		<view class="login-form-content">
 			<view class="input-item flex align-center">
 				<view class="iconfont icon-user icon"></view>
-				<input v-model="loginForm.username" class="input" type="text" placeholder="请输入账号" maxlength="30" />
+				<input v-model="loginForm.phone" class="input" type="text" placeholder="请输入手机号" maxlength="30" />
 			</view>
 			<view class="input-item flex align-center">
 				<view class="iconfont icon-password icon"></view>
@@ -25,7 +25,7 @@
 		data() {
 			return {
 				loginForm: {
-				  username: '',
+				  phone: '',
 				  password: ''
 				},
 				pwd: ''
@@ -34,9 +34,9 @@
 		methods: {
 			// 登录方法
 			handleLogin() {
-				if (this.loginForm.username === '') {
+				if (this.loginForm.phone === '') {
 					uni.showToast({
-						title: '账号不能为空',
+						title: '手机号不能为空',
 						icon: 'error'
 					})
 				} else if (this.loginForm.password === '') {
@@ -46,10 +46,10 @@
 					})
 				} else {
 					const db = uniCloud.database()
-					db.collection('user').where({name: this.loginForm.username}).get().then((res)=>{
+					db.collection('market').where({phone: this.loginForm.phone}).get().then((res)=>{
 						if (res.result.data[0].password === undefined) {
 							uni.showToast({
-								title: '用户不存在',
+								title: '市场不存在',
 								icon: 'error'
 							})
 						} else {
@@ -61,15 +61,35 @@
 								})
 							} else {
 								uni.setStorage({
-									key: 'username',
-									data: this.loginForm.username
+									key: 'phone',
+									data: this.loginForm.phone
+								})
+								uni.setStorage({
+									key: 'password3',
+									data: res.result.data[0].password
+								})
+								uni.setStorage({
+									key: 'identity',
+									data: 'market'
+								})
+								uni.setStorage({
+									key: 'name',
+									data: res.result.data[0].name
+								})
+								uni.setStorage({
+									key: 'image',
+									data: res.result.data[0].image
+								})
+								uni.setStorage({
+									key: 'address',
+									data: res.result.data[0].address
 								})
 								uni.showToast({
 									title: '登录成功',
 									icon: 'success'
 								})
 								uni.switchTab({
-									url: '/pages/user/index/index'
+									url: '/pages/index/index'
 								})
 							}
 						}

@@ -34,7 +34,37 @@
 	</view>
 	
 	<view v-else-if="identity === 'admin'">
-		
+		<view class="user-container bg-white flex flex-direction align-center">
+			<view class="cu-avatar xl round margin-left lage-avatar" :style="'background-image:url('+image2+');'" @click="changeImage"></view>
+			<view class="margin-top">
+				<text>{{adminname}}</text>
+			</view>
+		</view>
+		<view class="margin-top">
+			<view class="cu-list menu">
+				<view class="cu-item arrow" @tap="adminInfo()">
+					<view class="content">
+						<text class="lg text-gray cuIcon-friendaddfill"></text>
+						<text class="text-grey">个人信息</text>
+					</view>
+				</view>
+				<view class="cu-item arrow" @tap="changePwd">
+					<view class="content">
+						<text class="lg text-gray cuIcon-lock"></text>
+						<text class="text-grey">修改密码</text>
+					</view>
+				</view>
+			</view>
+		</view>	
+		<view class="margin-top">
+			<view class="cu-list menu">
+				<view class="cu-item " @tap="logout">
+					<view class="content text-center">
+						<text class="text-red">退 出</text>
+					</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -44,7 +74,9 @@
 			return {
 				username: 'user',
 				image: '/static/images/user.png',
-				identity: ''
+				identity: '',
+				adminname: '',
+				image2: '/static/images/user.png'
 			}
 		},
 		onLoad() {
@@ -53,6 +85,8 @@
 				this.username = uni.getStorageSync('username')
 				this.image = uni.getStorageSync('image')
 			}
+			if (uni.getStorageSync('adminname') !== '')
+				this.adminname = uni.getStorageSync('adminname')
 		},
 		methods: {
 			changeImage() {
@@ -121,8 +155,15 @@
 			
 			// 退出登录
 			logout() {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: '/pages/user/login/login'
+				})
+			},
+			
+			// 物业信息
+			adminInfo() {
+				uni.navigateTo({
+					url: '/pages/admin/adminInfo/adminInfo'
 				})
 			}
 		}
