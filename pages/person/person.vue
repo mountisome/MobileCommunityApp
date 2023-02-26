@@ -8,13 +8,13 @@
 		</view>
 		<view class="margin-top">
 			<view class="cu-list menu">
-				<view class="cu-item arrow" @tap="userInfo">
+				<view class="cu-item arrow" @tap="userInfo()">
 					<view class="content">
 						<text class="lg text-gray cuIcon-friendaddfill"></text>
 						<text class="text-grey">个人信息</text>
 					</view>
 				</view>
-				<view class="cu-item arrow" @tap="changePwd">
+				<view class="cu-item arrow" @tap="changePwd()">
 					<view class="content">
 						<text class="lg text-gray cuIcon-lock"></text>
 						<text class="text-grey">修改密码</text>
@@ -48,7 +48,41 @@
 						<text class="text-grey">个人信息</text>
 					</view>
 				</view>
-				<view class="cu-item arrow" @tap="changePwd">
+				<view class="cu-item arrow" @tap="changeAdminPwd()">
+					<view class="content">
+						<text class="lg text-gray cuIcon-lock"></text>
+						<text class="text-grey">修改密码</text>
+					</view>
+				</view>
+			</view>
+		</view>	
+		<view class="margin-top">
+			<view class="cu-list menu">
+				<view class="cu-item " @tap="logout">
+					<view class="content text-center">
+						<text class="text-red">退 出</text>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	
+	<view v-else-if="identity === 'market'">
+		<view class="user-container bg-white flex flex-direction align-center">
+			<view class="cu-avatar xl round margin-left lage-avatar" :style="'background-image:url('+image3+');'" @click="changeImage"></view>
+			<view class="margin-top">
+				<text>{{marketname}}</text>
+			</view>
+		</view>
+		<view class="margin-top">
+			<view class="cu-list menu">
+				<view class="cu-item arrow" @tap="marketInfo()">
+					<view class="content">
+						<text class="lg text-gray cuIcon-friendaddfill"></text>
+						<text class="text-grey">市场信息</text>
+					</view>
+				</view>
+				<view class="cu-item arrow" @tap="changeMarketPwd()">
 					<view class="content">
 						<text class="lg text-gray cuIcon-lock"></text>
 						<text class="text-grey">修改密码</text>
@@ -76,7 +110,9 @@
 				image: '/static/images/user.png',
 				identity: '',
 				adminname: '',
-				image2: '/static/images/user.png'
+				marketname: '',
+				image2: '/static/images/user.png',
+				image3: '/static/images/user.png'
 			}
 		},
 		onLoad() {
@@ -87,6 +123,10 @@
 			}
 			if (uni.getStorageSync('adminname') !== '')
 				this.adminname = uni.getStorageSync('adminname')
+			if (uni.getStorageSync('marketname') !== '') {
+				this.marketname = uni.getStorageSync('marketname')
+				this.image3 = uni.getStorageSync('image3')
+			}
 		},
 		methods: {
 			changeImage() {
@@ -165,7 +205,30 @@
 				uni.navigateTo({
 					url: '/pages/admin/adminInfo/adminInfo'
 				})
+			},
+			
+			// 修改物业密码
+			changeAdminPwd() {
+				uni.navigateTo({
+					url: '/pages/admin/changePwd/changePwd'
+				})
+			},
+			
+			// 市场信息
+			marketInfo() {
+				uni.navigateTo({
+					url: '/pages/market/marketInfo/marketInfo'
+				})
+			},
+			
+			// 修改市场密码
+			changeMarketPwd() {
+				uni.navigateTo({
+					url: '/pages/market/changePwd/changePwd'
+				})
 			}
+			
+			
 		}
 	}
 </script>

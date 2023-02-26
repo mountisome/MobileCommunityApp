@@ -73,11 +73,11 @@
 									data: 'market'
 								})
 								uni.setStorage({
-									key: 'name',
+									key: 'marketname',
 									data: res.result.data[0].name
 								})
 								uni.setStorage({
-									key: 'image',
+									key: 'image3',
 									data: res.result.data[0].image
 								})
 								uni.setStorage({

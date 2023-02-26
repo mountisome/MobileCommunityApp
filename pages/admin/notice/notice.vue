@@ -51,12 +51,17 @@
 					    console.log(err.code)
 						console.log(err.message)
 					})
-					uni.redirectTo({
-						url: '/pages/admin/notice/notice'
+					db.collection('notice').where({name: 'ALL'}).get().then((res)=>{
+						let len = res.result.data.length
+						let noticeList2 = []
+						for (let i = 0; i < len; i++) {
+							noticeList2.push({
+								info: res.result.data[i].info,
+								time: res.result.data[i].time
+							})
+						}
+						this.noticeList = noticeList2
 					})
-					const pages = getCurrentPages()
-					const curPage = pages[pages.length - 1]
-					curPage.onLoad()
 				} else {
 					uni.showToast({
 						title: '通知不能为空',

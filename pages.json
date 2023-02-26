@@ -168,6 +168,42 @@
             }
             
         }
+        ,{
+            "path" : "pages/market/commodity/commodity",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "商品信息",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/market/addCommodity/addCommodity",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "添加商品",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/market/marketInfo/marketInfo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "市场信息",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/market/changePwd/changePwd",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "修改密码",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

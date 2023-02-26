@@ -90,7 +90,44 @@
 	</view>
 	
 	<view v-else-if="identity === 'market'">
-		
+		<view class="function">
+			<uni-grid :column="4" :showBorder="false" :highlight="true" @change="change">
+				<uni-grid-item v-for="(item, index) in list3" :index="index" :key="index">
+					<view class="grid-item-box" style="background-color: #fff;">
+						<image :src="item.url" class="image" mode="aspectFill" />
+						<text class="text">{{item.text}}</text>
+					</view>
+				</uni-grid-item>
+			</uni-grid>
+		</view>
+		<view class="uni-margin-wrap">
+			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
+				:duration="duration">
+				<swiper-item>
+					<view class="swiper-item">
+						<image :src="image4" mode="aspectFill" />
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="swiper-item">
+						<image :src="image5" mode="aspectFill" />
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="swiper-item">
+						<image :src="image6" mode="aspectFill" />
+					</view>
+				</swiper-item>
+			</swiper>
+		</view>
+		<view class="noticeList">
+			<uni-notice-bar show-icon scrollable text="下面是用户的商品需求,请注意查看!" />
+			<uni-list v-for="(notice, index) in marketNoticeList" :key="index">
+				<uni-list-item :title="notice.info">
+				</uni-list-item>
+				<uni-dateformat :date="notice.time" style="margin-left: 15px; margin-bottom: 10px;"></uni-dateformat>
+			</uni-list>
+		</view>
 	</view>
 </template>
 
@@ -135,6 +172,12 @@
 						url: '/static/images/notice.png'
 					}
 				],
+				list3: [
+					{
+						text: '商品信息',
+						url: '/static/images/commodity.png'
+					}
+				],
 				indicatorDots: true,
 				autoplay: true,
 				interval: 2000,
@@ -142,9 +185,13 @@
 				image1: '/static/images/swiper1.jpg',
 				image2: '/static/images/swiper2.jpeg',
 				image3: '/static/images/swiper3.jpeg',
+				image4: '/static/images/market/market1.jpeg',
+				image5: '/static/images/market/market2.jpg',
+				image6: '/static/images/market/market3.jpeg',
 				importantNoticeList: [],
 				noticeList: [],
-				adminNoticeList: []
+				adminNoticeList: [],
+				marketNoticeList: []
 			}
 		},
 		onLoad() {
@@ -160,6 +207,7 @@
 					let importantNoticeList2 = []
 					let noticeList2 = []
 					let adminNoticeList2 = []
+					let marketNoticeList2 = []
 					for (let i = 0; i < len; i++) {
 						if (res.result.data[i].name === username) {
 							importantNoticeList2.push({
@@ -176,11 +224,17 @@
 								info: res.result.data[i].info,
 								time: res.result.data[i].time
 							})
+						} else if (res.result.data[i].name === 'market') {
+							marketNoticeList2.push({
+								info: res.result.data[i].info,
+								time: res.result.data[i].time
+							})
 						}
 					}
 					this.importantNoticeList = importantNoticeList2
 					this.noticeList = noticeList2
 					this.adminNoticeList = adminNoticeList2
+					this.marketNoticeList = marketNoticeList2
 				}
 			}).catch((err)=>{
 				console.log(err.code)
@@ -224,6 +278,12 @@
 					} else if (index === 4) {
 						uni.navigateTo({
 							url: '/pages/admin/notice/notice'
+						})
+					}
+				} else if (this.identity === 'market') {
+					if (index === 0) {
+						uni.navigateTo({
+							url: '/pages/market/commodity/commodity'
 						})
 					}
 				}
