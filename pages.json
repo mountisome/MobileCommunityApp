@@ -204,6 +204,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/admin/commodityNotice/commodityNotice",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "商品通知",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

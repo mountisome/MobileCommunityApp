@@ -12,8 +12,8 @@
 					</view>
 				</uni-card>
 				<view class="reply">
-					<uni-easyinput type="textarea" v-model="value" placeholder="请输入内容"></uni-easyinput>
-					<button type="primary" size="mini" @click="reply(request.name, request.requestTime)" class="btn-reply">回复</button>
+					<uni-easyinput type="textarea" v-model="request.value" placeholder="请输入内容"></uni-easyinput>
+					<button type="primary" size="mini" @click="reply(request.name, request.requestTime, request.value)" class="btn-reply">回复</button>
 				</view>
 			</uni-list>
 		</uni-section>
@@ -24,12 +24,11 @@
 	export default {
 		data() {
 			return {
-				requestList: [],
-				value: '',
+				requestList: []
 			}
 		},
 		methods: {
-			reply(name, requestTime) {
+			reply(name, requestTime, value) {
 				var timestamp = new Date().getTime()
 				const db = uniCloud.database()
 				db.collection('request').where({
@@ -37,7 +36,7 @@
 					requestTime: requestTime
 				}).update({
 				    solved: true,
-					responseContent: this.value,
+					responseContent: value,
 					responseTime: timestamp
 				})
 				uni.showToast({
@@ -46,42 +45,45 @@
 				})
 				db.collection('request').get().then((res)=>{
 					let requestList2 = []
-					let k = 0;
 					let len = res.result.data.length
 					for (let i = 0; i < len; i++) {
 						if (!res.result.data[i].solved) {
-							this.$set(this.requestList2, k, {
+							requestList2.push({
 								name: res.result.data[i].name,
 								requestContent: res.result.data[i].requestContent,
-								requestTime: res.result.data[i].requestTime
+								requestTime: res.result.data[i].requestTime,
+								value: ''
 							})
-							k++
 						}
 					}
 					this.requestList = requestList2
 				})
+				db.collection('notice').where({
+				    info: value,
+					name: 'admin'
+				}).remove()
+				db.collection('notice').where({
+				    info: value,
+					name: 'admin'
+				}).remove()
 			}
 		},
 		onLoad() {
 			const db = uniCloud.database()
 			db.collection('request').get().then((res)=>{
+				let requestList2 = []
 				let len = res.result.data.length
-				if (len > 0) {
-					let k = 0
-					for (let i = 0; i < len; i++) {
-						if (!res.result.data[i].solved) {
-							this.$set(this.requestList, k, {
-								name: res.result.data[i].name,
-								requestContent: res.result.data[i].requestContent,
-								requestTime: res.result.data[i].requestTime
-							})
-							k++
-						}
+				for (let i = 0; i < len; i++) {
+					if (!res.result.data[i].solved) {
+						requestList2.push({
+							name: res.result.data[i].name,
+							requestContent: res.result.data[i].requestContent,
+							requestTime: res.result.data[i].requestTime,
+							value: ''
+						})
 					}
 				}
-			}).catch((err)=>{
-				console.log(err.code)
-				console.log(err.message)
+				this.requestList = requestList2
 			})
 		}
 	}

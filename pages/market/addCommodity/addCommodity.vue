@@ -42,6 +42,12 @@
 						title: '商品添加成功',
 						icon: 'success'
 					})
+					let timestamp = new Date().getTime()
+					db.collection('notice').add({
+						info: this.baseFormData.name + '商品已添加',
+						time: timestamp,
+						name: 'admin'
+					})
 				}).catch((err)=>{
 				    console.log(err.code)
 					console.log(err.message)

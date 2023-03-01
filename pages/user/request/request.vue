@@ -63,27 +63,27 @@
 			db.collection('request').get().then((res)=>{
 				let len = res.result.data.length
 				if (len > 0) {
-					let k = 0
-					let t = 0
+					let solvedRequest2 = []
+					let unsolvedRequest2 = []
 					for (let i = 0; i < len; i++) {
 						if (res.result.data[i].name == this.username) {
 							if (res.result.data[i].solved) {
-								this.$set(this.solvedRequest, k, {
-										requestContent: res.result.data[i].requestContent,
-										requestTime: res.result.data[i].requestTime,
-										responseContent: res.result.data[i].responseContent,
-										responseTime: res.result.data[i].responseTime	
+								solvedRequest2.push({
+									requestContent: res.result.data[i].requestContent,
+									requestTime: res.result.data[i].requestTime,
+									responseContent: res.result.data[i].responseContent,
+									responseTime: res.result.data[i].responseTime
 								})
-								k++
 							} else {
-								this.$set(this.unsolvedRequest, t, {
+								unsolvedRequest2.push({
 									requestContent: res.result.data[i].requestContent,
 									requestTime: res.result.data[i].requestTime
 								})
-								t++
 							}
 						}
 					}
+					this.solvedRequest = solvedRequest2
+					this.unsolvedRequest = unsolvedRequest2
 				}
 			}).catch((err)=>{
 				console.log(err.code)
@@ -108,6 +108,22 @@
 					})
 				}).catch((err)=>{
 					console.log(err.code)
+					console.log(err.message)
+				})
+				db.collection('request').get().then((res)=>{
+					let len = res.result.data.length
+					let unsolvedRequest2 = []
+					for (let i = 0; i < len; i++) {
+						if (res.result.data[i].name == this.username && !res.result.data[i].solved) {
+							unsolvedRequest2.push({
+								requestContent: res.result.data[i].requestContent,
+								requestTime: res.result.data[i].requestTime
+							})
+						}
+					}
+					this.unsolvedRequest = unsolvedRequest2
+				}).catch((err)=>{
+				    console.log(err.code)
 					console.log(err.message)
 				})
 			}

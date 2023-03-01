@@ -80,7 +80,7 @@
 			</swiper>
 		</view>
 		<view class="noticeList">
-			<uni-notice-bar show-icon scrollable text="下面是用户的通知,请注意查看!" />
+			<uni-notice-bar show-icon scrollable text="下面是用户和市场的通知,请注意查看!" />
 			<uni-list v-for="(notice, index) in adminNoticeList" :key="index">
 				<uni-list-item :title="notice.info">
 				</uni-list-item>
@@ -170,6 +170,10 @@
 					{
 						text: '通知发布',
 						url: '/static/images/notice.png'
+					},
+					{
+						text: '商品通知',
+						url: '/static/images/commodityNotice.png'
 					}
 				],
 				list3: [
@@ -278,6 +282,10 @@
 					} else if (index === 4) {
 						uni.navigateTo({
 							url: '/pages/admin/notice/notice'
+						})
+					} else if (index == 5) {
+						uni.navigateTo({
+							url: '/pages/admin/commodityNotice/commodityNotice'
 						})
 					}
 				} else if (this.identity === 'market') {
