@@ -8,7 +8,7 @@ MoileCommunityApp是一个用uni-app开发的掌上社区应用，前端使用un
 
 ### 2.总体模块设计
 
-![](https://mountisomeb1.oss-cn-shanghai.aliyuncs.com/img/202304191003221.jpg)
+<img src="https://mountisomeb1.oss-cn-shanghai.aliyuncs.com/img/202304191003221.jpg" style="zoom: 50%;" />
 
 
 
