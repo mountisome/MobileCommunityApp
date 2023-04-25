@@ -134,7 +134,6 @@
 					count: 1,
 					sizeType: ['compressed'],
 					success(res) {
-						console.log(res)
 						if (res.tempFilePaths.length > 0) {
 							let filePath = res.tempFilePaths[0]
 							uniCloud.uploadFile({
@@ -157,8 +156,8 @@
 										title: '图片上传成功',
 										icon: 'success'
 									})
-									const page = getCurrentPages()[0];
-									const vm = page.$vm;
+									const page = getCurrentPages()[0]
+									const vm = page.$vm
 									vm.$data.image = imageUrl
 								},
 								fail() {
@@ -195,7 +194,7 @@
 			
 			// 退出登录
 			logout() {
-				uni.redirectTo({
+				uni.reLaunch({
 					url: '/pages/user/login/login'
 				})
 			},

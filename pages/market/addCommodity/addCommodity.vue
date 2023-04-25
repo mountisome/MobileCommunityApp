@@ -48,6 +48,7 @@
 						time: timestamp,
 						name: 'admin'
 					})
+					uni.navigateBack()
 				}).catch((err)=>{
 				    console.log(err.code)
 					console.log(err.message)

@@ -59,34 +59,52 @@
 				    name: name
 				}).update({
 				    fee: 0
-				}).catch((err)=>{
-					console.log(err.code)
-					console.log(err.message)
-				})
-				db.collection('notice').where({
-					info: '请尽快缴纳物业费',
-					name: name
-				}).remove().then((res)=>{
-					uni.showToast({
-						title: '用户物业费缴纳成功',
-						icon: 'success'
+				}).then((res)=>{
+					db.collection('notice').where({
+						info: '请尽快缴纳物业费',
+						name: name
+					}).remove().then((res)=>{
+						uni.showToast({
+							title: '用户物业费缴纳成功',
+							icon: 'success'
+						})
+						db.collection('notice').where({
+							info: name + '已缴费',
+							name: 'admin'
+						}).remove()
+						db.collection('user').get().then((res)=>{
+							let len = res.result.data.length
+							if (len > 0) {
+								let paidList2 = []
+								let unpaidList2 = []
+								for (let i = 0; i < len; i++) {
+									if (res.result.data[i].fee === 0) {
+										paidList2.push({
+											name: res.result.data[i].name,
+											paid: '已缴'
+										})
+									} else {
+										unpaidList2.push({
+											name: res.result.data[i].name,
+											fee: res.result.data[i].fee.toString()
+										})
+									}
+								}
+								this.paidList = paidList2
+								this.unpaidList = unpaidList2
+							}
+						})
+					}).catch((err)=>{
+						console.log(err.code)
+						console.log(err.message)
 					})
-				}).catch((err)=>{
-					console.log(err.code)
-					console.log(err.message)
-				})
-				db.collection('notice').where({
-					info: name + '已缴费',
-					name: 'admin'
-				}).remove().then((res)=>{
-					
 				}).catch((err)=>{
 					console.log(err.code)
 					console.log(err.message)
 				})
 			}
 		},
-		onShow() {
+		onLoad() {
 			const db = uniCloud.database()
 			db.collection('user').get().then((res)=>{
 				let len = res.result.data.length

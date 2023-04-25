@@ -24,7 +24,7 @@
 			<template v-slot:decoration>
 			  <view class="decoration"></view>
 			</template>
-			<uni-collapse v-for="(request, index) in unsolvedRequest">
+			<uni-collapse v-for="(request, index) in unsolvedRequest" :key="request.requestTime">
 				<uni-collapse-item :title="'请求'+(index+1)">
 					<uni-card title="请求:" :thumbnail="image1">
 						<text>{{request.requestContent}}</text>
@@ -106,24 +106,25 @@
 						title: '请求提交成功',
 						icon: 'success'
 					})
+					this.value = ""
+					db.collection('request').get().then((res)=>{
+						let len = res.result.data.length
+						let unsolvedRequest2 = []
+						for (let i = 0; i < len; i++) {
+							if (res.result.data[i].name == this.username && !res.result.data[i].solved) {
+								unsolvedRequest2.push({
+									requestContent: res.result.data[i].requestContent,
+									requestTime: res.result.data[i].requestTime
+								})
+							}
+						}
+						this.unsolvedRequest = unsolvedRequest2
+					}).catch((err)=>{
+					    console.log(err.code)
+						console.log(err.message)
+					})
 				}).catch((err)=>{
 					console.log(err.code)
-					console.log(err.message)
-				})
-				db.collection('request').get().then((res)=>{
-					let len = res.result.data.length
-					let unsolvedRequest2 = []
-					for (let i = 0; i < len; i++) {
-						if (res.result.data[i].name == this.username && !res.result.data[i].solved) {
-							unsolvedRequest2.push({
-								requestContent: res.result.data[i].requestContent,
-								requestTime: res.result.data[i].requestTime
-							})
-						}
-					}
-					this.unsolvedRequest = unsolvedRequest2
-				}).catch((err)=>{
-				    console.log(err.code)
 					console.log(err.message)
 				})
 			}

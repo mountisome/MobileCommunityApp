@@ -1,9 +1,11 @@
 <template>
-	<view class="notice">
+	<view>
 		<uni-list :border="true" v-for="(notice, index) in noticeList">
-			<uni-list-item :title="notice.info">
-			</uni-list-item>
-			<uni-dateformat :date="notice.time" style="margin-left: 15px; margin-bottom: 10px;"></uni-dateformat>
+			<view class="notice" @longpress="delNotice(notice.time)">
+				<uni-list-item :title="notice.info">
+				</uni-list-item>
+				<uni-dateformat :date="notice.time" style="margin-left: 15px; margin-bottom: 10px;"></uni-dateformat>
+			</view>
 		</uni-list>
 	</view>
 	<view>
@@ -47,20 +49,20 @@
 					    	title: '通知发布成功',
 							icon: 'success'
 					    })
+						db.collection('notice').where({name: 'ALL'}).get().then((res)=>{
+							let len = res.result.data.length
+							let noticeList2 = []
+							for (let i = 0; i < len; i++) {
+								noticeList2.push({
+									info: res.result.data[i].info,
+									time: res.result.data[i].time
+								})
+							}
+							this.noticeList = noticeList2
+						})
 					}).catch((err)=>{
 					    console.log(err.code)
 						console.log(err.message)
-					})
-					db.collection('notice').where({name: 'ALL'}).get().then((res)=>{
-						let len = res.result.data.length
-						let noticeList2 = []
-						for (let i = 0; i < len; i++) {
-							noticeList2.push({
-								info: res.result.data[i].info,
-								time: res.result.data[i].time
-							})
-						}
-						this.noticeList = noticeList2
 					})
 				} else {
 					uni.showToast({
@@ -68,6 +70,46 @@
 						icon: 'error'
 					})
 				}
+			},
+			delNotice(time) {
+				uni.showModal({
+					title: '提示',
+					content: '确认删除通知？',
+					success:function(res){
+						if (res.confirm) {
+							const db = uniCloud.database()
+							db.collection('notice').where({
+								time: time,
+								name: 'ALL'
+							}).remove().then((res)=>{
+								uni.showToast({
+									title: '通知删除成功',
+									icon: 'success'
+								})
+								let len = getCurrentPages().length
+								const page = getCurrentPages()[len - 1]
+								page.$vm.updateNoticeList()
+							}).catch((err)=>{
+								console.log(err.code)
+								console.log(err.message)
+							})
+						}
+					}
+				})
+			},
+			updateNoticeList() {
+				const db = uniCloud.database()
+				db.collection('notice').where({name: 'ALL'}).get().then((res)=>{
+					let len = res.result.data.length
+					let noticeList2 = []
+					for (let i = 0; i < len; i++) {
+						noticeList2.push({
+							info: res.result.data[i].info,
+							time: res.result.data[i].time
+						})
+					}
+					this.noticeList = noticeList2
+				})
 			}
 		},
 		onLoad() {

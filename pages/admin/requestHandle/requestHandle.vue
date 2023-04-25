@@ -38,34 +38,27 @@
 				    solved: true,
 					responseContent: value,
 					responseTime: timestamp
+				}).then((res)=>{
+					db.collection('request').get().then((res)=>{
+						let requestList2 = []
+						let len = res.result.data.length
+						for (let i = 0; i < len; i++) {
+							if (!res.result.data[i].solved) {
+								requestList2.push({
+									name: res.result.data[i].name,
+									requestContent: res.result.data[i].requestContent,
+									requestTime: res.result.data[i].requestTime,
+									value: ''
+								})
+							}
+						}
+						this.requestList = requestList2
+					})
 				})
 				uni.showToast({
 					title: '回复请求成功',
 					icon: 'success'
 				})
-				db.collection('request').get().then((res)=>{
-					let requestList2 = []
-					let len = res.result.data.length
-					for (let i = 0; i < len; i++) {
-						if (!res.result.data[i].solved) {
-							requestList2.push({
-								name: res.result.data[i].name,
-								requestContent: res.result.data[i].requestContent,
-								requestTime: res.result.data[i].requestTime,
-								value: ''
-							})
-						}
-					}
-					this.requestList = requestList2
-				})
-				db.collection('notice').where({
-				    info: value,
-					name: 'admin'
-				}).remove()
-				db.collection('notice').where({
-				    info: value,
-					name: 'admin'
-				}).remove()
 			}
 		},
 		onLoad() {

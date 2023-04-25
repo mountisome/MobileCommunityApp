@@ -28,7 +28,7 @@
 		methods: {
 			
 		},
-		onShow() {
+		onLoad() {
 			const db = uniCloud.database()
 			db.collection('commodity').get().then((res)=>{
 				let len = res.result.data.length

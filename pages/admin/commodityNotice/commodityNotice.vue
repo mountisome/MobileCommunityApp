@@ -40,22 +40,22 @@
 				        title: '商品通知删除成功',
 				        icon: 'success'
 				    })
+					db.collection('notice').get().then((res)=>{
+						let commodityNoticeList2 = []
+						let len = res.result.data.length
+						for (let i = 0; i < len; i++) {
+							if (res.result.data[i].name === 'market') {
+								commodityNoticeList2.push({
+									info: res.result.data[i].info,
+									time: res.result.data[i].time
+								})
+							}
+						}
+						this.commodityNoticeList = commodityNoticeList2
+					})
 				}).catch((err)=>{
 				    console.log(err.code)
 					console.log(err.message)
-				})
-				db.collection('notice').get().then((res)=>{
-					let commodityNoticeList2 = []
-					let len = res.result.data.length
-					for (let i = 0; i < len; i++) {
-						if (res.result.data[i].name === 'market') {
-							commodityNoticeList2.push({
-								info: res.result.data[i].info,
-								time: res.result.data[i].time
-							})
-						}
-					}
-					this.commodityNoticeList = commodityNoticeList2
 				})
 			},
 			submitNotice() {
@@ -76,6 +76,20 @@
 					    	title: '商品通知发送成功',
 							icon: 'success'
 					    })
+						this.value = ""
+						db.collection('notice').get().then((res)=>{
+							let commodityNoticeList2 = []
+							let len = res.result.data.length
+							for (let i = 0; i < len; i++) {
+								if (res.result.data[i].name === 'market') {
+									commodityNoticeList2.push({
+										info: res.result.data[i].info,
+										time: res.result.data[i].time
+									})
+								}
+							}
+							this.commodityNoticeList = commodityNoticeList2
+						})
 					}).catch((err)=>{
 					    console.log(err.code)
 						console.log(err.message)

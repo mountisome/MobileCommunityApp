@@ -51,21 +51,21 @@
 				        title: '商品删除成功',
 				        icon: 'success'
 				    })
+					db.collection('commodity').get().then((res)=>{
+						let len = res.result.data.length
+						let commodityList2 = []
+						for (let i = 0; i < len; i++) {
+							commodityList2.push({
+								image: res.result.data[i].image,
+								name: res.result.data[i].name,
+								price: res.result.data[i].price.toString()
+							})
+						}
+						this.commodityList = commodityList2
+					})
 				}).catch((err)=>{
 				    console.log(err.code)
 					console.log(err.message)
-				})
-				db.collection('commodity').get().then((res)=>{
-					let len = res.result.data.length
-					let commodityList2 = []
-					for (let i = 0; i < len; i++) {
-						commodityList2.push({
-							image: res.result.data[i].image,
-							name: res.result.data[i].name,
-							price: res.result.data[i].price.toString()
-						})
-					}
-					this.commodityList = commodityList2
 				})
 			},
 			addCommodity() {

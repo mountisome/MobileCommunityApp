@@ -58,7 +58,7 @@
 						title: '密码修改成功',
 						icon: 'success'
 					})
-					uni.navigateTo({
+					uni.reLaunch({
 						url: '/pages/user/login/login'
 					})
 				}

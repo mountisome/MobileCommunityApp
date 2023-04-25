@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<uni-list :border="true" v-for="(user, index) in userList">
+		<uni-list v-for="(user, index) in userList" :key="user.name" :border="true">
 			<uni-list-chat :title="user.name" :avatar="user.image"
 				:note="user.phone">
 				<view class="chat-custom-right">
@@ -43,6 +43,21 @@
 					url: '/pages/admin/addUser/addUser'
 				})
 			},
+			updateList() {
+				const db = uniCloud.database()
+				db.collection('user').get().then((res)=>{
+					let userList2 = []
+					let len = res.result.data.length
+					for (let i = 0; i < len; i++) {
+						userList2.push({
+							name: res.result.data[i].name,
+							phone: res.result.data[i].phone,
+							image: res.result.data[i].image
+						})
+					}
+					this.userList = userList2
+				})
+			},
 			deleteUser(username) {
 				uni.showModal({
 					title: '提示',
@@ -57,17 +72,10 @@
 									title: '用户删除成功',
 									icon: 'success'
 								})
-								db.collection('user').get().then((res)=>{
-									let userList2 = []
-									let len = res.result.data.length
-									for (let i = 0; i < len; i++) {
-										this.$set(userList2, i, {
-											name: res.result.data[i].name,
-											phone: res.result.data[i].phone,
-											image: res.result.data[i].image})
-									}
-									this.userList = userList2
-								})
+								let len = getCurrentPages().length
+								const page = getCurrentPages()[len - 1]
+								const vm = page.$vm
+								vm.updateList()
 							}).catch((err)=>{
 								console.log(err.code)
 								console.log(err.message)
@@ -86,24 +94,28 @@
 			const db = uniCloud.database()
 			db.collection('user').get().then((res)=>{
 				let len = res.result.data.length
-				for (let i = 0; i < len; i++) {
-					this.$set(this.userList, i, {
+				let userList2 = []
+				for (let i = 0; i < len; i++)
+					userList2.push({
 						name: res.result.data[i].name,
 						phone: res.result.data[i].phone,
-						image: res.result.data[i].image})
-				}
+						image: res.result.data[i].image
+					})
+				this.userList = userList2
 			})
 		},
 		onShow() {
 			const db = uniCloud.database()
 			db.collection('user').get().then((res)=>{
 				let len = res.result.data.length
-				for (let i = 0; i < len; i++) {
-					this.$set(this.userList, i, {
+				let userList2 = []
+				for (let i = 0; i < len; i++)
+					userList2.push({
 						name: res.result.data[i].name,
 						phone: res.result.data[i].phone,
-						image: res.result.data[i].image})
-				}
+						image: res.result.data[i].image
+					})
+				this.userList = userList2
 			})
 		}
 	}
