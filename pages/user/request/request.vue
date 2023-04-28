@@ -4,15 +4,23 @@
 			<uni-collapse accordion v-for="(request, index) in solvedRequest">
 				<uni-collapse-item :title="'请求'+(index+1)">
 					<uni-card title="请求:" :thumbnail="image1">
-						<text>{{request.requestContent}}</text>
 						<view>
-							<uni-dateformat :date="request.requestTime"></uni-dateformat>
+							<text class="text-black text-bold">{{request.requestContent}}</text>
+						</view>
+						<view>
+							<text class="text-red">请求类型：{{request.requestType}}</text>
+						</view>
+						<view>
+							<text class="text-red">时效要求：{{request.timeRequire}}</text>
+						</view>
+						<view>
+							<uni-dateformat :date="request.requestTime" class="text-blue"></uni-dateformat>
 						</view>
 					</uni-card>
 					<uni-card title="回复:" :thumbnail="image2">
-						<text>{{request.responseContent}}</text>
+						<text class="text-black text-bold">{{request.responseContent}}</text>
 						<view>
-							<uni-dateformat :date="request.responseTime"></uni-dateformat>
+							<uni-dateformat :date="request.responseTime" class="text-blue"></uni-dateformat>
 						</view>
 					</uni-card>
 				</uni-collapse-item>
@@ -24,12 +32,56 @@
 			<template v-slot:decoration>
 			  <view class="decoration"></view>
 			</template>
+			<view class="tag">
+				<uni-tag text="紧急" type="error"/>
+			</view>
 			<uni-collapse v-for="(request, index) in unsolvedRequest" :key="request.requestTime">
 				<uni-collapse-item :title="'请求'+(index+1)">
 					<uni-card title="请求:" :thumbnail="image1">
-						<text>{{request.requestContent}}</text>
 						<view>
-							<uni-dateformat :date="request.requestTime"></uni-dateformat>
+							<text class="text-black text-bold">{{request.requestContent}}</text>
+						</view>
+						<view>
+							<text class="text-red">请求类型：{{request.requestType}}</text>
+						</view>
+						<view>
+							<uni-dateformat :date="request.requestTime" class="text-blue"></uni-dateformat>
+						</view>
+					</uni-card>
+				</uni-collapse-item>
+			</uni-collapse>
+			<view class="tag2">
+				<uni-tag text="尽快" type="warning"/>
+			</view>
+			<uni-collapse v-for="(request, index) in unsolvedRequest2" :key="request.requestTime">
+				<uni-collapse-item :title="'请求'+(index+1)">
+					<uni-card title="请求:" :thumbnail="image1">
+						<view>
+							<text class="text-black text-bold">{{request.requestContent}}</text>
+						</view>
+						<view>
+							<text class="text-red">请求类型：{{request.requestType}}</text>
+						</view>
+						<view>
+							<uni-dateformat :date="request.requestTime" class="text-blue"></uni-dateformat>
+						</view>
+					</uni-card>
+				</uni-collapse-item>
+			</uni-collapse>
+			<view class="tag3">
+				<uni-tag text="正常" type="primary"/>
+			</view>
+			<uni-collapse v-for="(request, index) in unsolvedRequest3" :key="request.requestTime">
+				<uni-collapse-item :title="'请求'+(index+1)">
+					<uni-card title="请求:" :thumbnail="image1">
+						<view>
+							<text class="text-black text-bold">{{request.requestContent}}</text>
+						</view>
+						<view>
+							<text class="text-red">请求类型：{{request.requestType}}</text>
+						</view>
+						<view>
+							<uni-dateformat :date="request.requestTime" class="text-blue"></uni-dateformat>
 						</view>
 					</uni-card>
 				</uni-collapse-item>
@@ -39,6 +91,14 @@
 	<view>
 		<uni-section title="提出请求" padding titleFontSize="16px" type="square">
 			<uni-easyinput type="textarea" v-model="value" placeholder="请输入内容"></uni-easyinput>
+			<view class="requestType">
+				<text>请求类型</text>
+				<uni-data-select v-model="value2" :localdata="range2" @change="change2" :clear="false"></uni-data-select>
+			</view>
+			<view class="timeRequire">
+				<text>时效要求</text>
+				<uni-data-select v-model="value3" :localdata="range3" @change="change3" :clear="false"></uni-data-select>
+			</view>
 			<button class="btn-submit" type="primary" plain="true" size="mini" @click="submitRequest()">提交</button>
 		</uni-section>
 	</view>
@@ -51,9 +111,24 @@
 				image1: '',
 				image2: '/static/images/user.png',
 				value: '',
+				value2: -1,
+				value3: -1,
 				username: '',
 				solvedRequest: [],
-				unsolvedRequest: []
+				unsolvedRequest: [],
+				unsolvedRequest2: [],
+				unsolvedRequest3: [],
+				range2: [
+					{value: 0, text: '水'},
+					{value: 1, text: '电'},
+					{value: 2, text: '燃气'},
+					{value: 3, text: '其他'}
+				],
+				range3: [
+					{value: 0, text: '紧急'},
+					{value: 1, text: '尽快'},
+					{value: 2, text: '正常'}
+				]
 			}
 		},
 		onLoad() {
@@ -64,7 +139,9 @@
 				let len = res.result.data.length
 				if (len > 0) {
 					let solvedRequest2 = []
-					let unsolvedRequest2 = []
+					let unsolvedRequest_ = []
+					let unsolvedRequest_2 = []
+					let unsolvedRequest_3 = []
 					for (let i = 0; i < len; i++) {
 						if (res.result.data[i].name == this.username) {
 							if (res.result.data[i].solved) {
@@ -72,18 +149,39 @@
 									requestContent: res.result.data[i].requestContent,
 									requestTime: res.result.data[i].requestTime,
 									responseContent: res.result.data[i].responseContent,
-									responseTime: res.result.data[i].responseTime
+									responseTime: res.result.data[i].responseTime,
+									requestType: res.result.data[i].requestType,
+									timeRequire: res.result.data[i].timeRequire
 								})
 							} else {
-								unsolvedRequest2.push({
-									requestContent: res.result.data[i].requestContent,
-									requestTime: res.result.data[i].requestTime
-								})
+								if (res.result.data[i].timeRequire === "紧急")
+									unsolvedRequest_.push({
+										requestContent: res.result.data[i].requestContent,
+										requestTime: res.result.data[i].requestTime,
+										requestType: res.result.data[i].requestType,
+										timeRequire: res.result.data[i].timeRequire
+									})
+								else if (res.result.data[i].timeRequire === "尽快")
+									unsolvedRequest_2.push({
+										requestContent: res.result.data[i].requestContent,
+										requestTime: res.result.data[i].requestTime,
+										requestType: res.result.data[i].requestType,
+										timeRequire: res.result.data[i].timeRequire
+									})
+								else
+									unsolvedRequest_3.push({
+										requestContent: res.result.data[i].requestContent,
+										requestTime: res.result.data[i].requestTime,
+										requestType: res.result.data[i].requestType,
+										timeRequire: res.result.data[i].timeRequire
+									})
 							}
 						}
 					}
 					this.solvedRequest = solvedRequest2
-					this.unsolvedRequest = unsolvedRequest2
+					this.unsolvedRequest = unsolvedRequest_
+					this.unsolvedRequest2 = unsolvedRequest_2
+					this.unsolvedRequest3 = unsolvedRequest_3
 				}
 			}).catch((err)=>{
 				console.log(err.code)
@@ -92,41 +190,90 @@
 		},
 		methods: {
 			submitRequest() {
-				let timestamp = new Date().getTime()
-				const db = uniCloud.database()
-				db.collection('request').add({
-					name: this.username,
-					requestContent: this.value,
-					requestTime: timestamp,
-					solved: false,
-					responseContent: "",
-					responseTime: 0
-				}).then((res)=>{
-					uni.showToast({
-						title: '请求提交成功',
-						icon: 'success'
-					})
-					this.value = ""
-					db.collection('request').get().then((res)=>{
-						let len = res.result.data.length
-						let unsolvedRequest2 = []
-						for (let i = 0; i < len; i++) {
-							if (res.result.data[i].name == this.username && !res.result.data[i].solved) {
-								unsolvedRequest2.push({
-									requestContent: res.result.data[i].requestContent,
-									requestTime: res.result.data[i].requestTime
-								})
+				if (this.value != "" && this.value2 != -1 && this.value3 != -1) {
+					let timestamp = new Date().getTime()
+					const db = uniCloud.database()
+					db.collection('request').add({
+						name: this.username,
+						requestContent: this.value,
+						requestTime: timestamp,
+						solved: false,
+						responseContent: "",
+						responseTime: 0,
+						requestType: this.range2[this.value2].text,
+						timeRequire: this.range3[this.value3].text
+					}).then((res)=>{
+						uni.showToast({
+							title: '请求提交成功',
+							icon: 'success'
+						})
+						this.value = ""
+						db.collection('request').get().then((res)=>{
+							let len = res.result.data.length
+							if (len > 0) {
+								let solvedRequest2 = []
+								let unsolvedRequest_ = []
+								let unsolvedRequest_2 = []
+								let unsolvedRequest_3 = []
+								for (let i = 0; i < len; i++) {
+									if (res.result.data[i].name == this.username) {
+										if (res.result.data[i].solved) {
+											solvedRequest2.push({
+												requestContent: res.result.data[i].requestContent,
+												requestTime: res.result.data[i].requestTime,
+												responseContent: res.result.data[i].responseContent,
+												responseTime: res.result.data[i].responseTime,
+												requestType: res.result.data[i].requestType,
+												timeRequire: res.result.data[i].timeRequire
+											})
+										} else {
+											if (res.result.data[i].timeRequire === "紧急")
+												unsolvedRequest_.push({
+													requestContent: res.result.data[i].requestContent,
+													requestTime: res.result.data[i].requestTime,
+													requestType: res.result.data[i].requestType,
+													timeRequire: res.result.data[i].timeRequire
+												})
+											else if (res.result.data[i].timeRequire === "尽快")
+												unsolvedRequest_2.push({
+													requestContent: res.result.data[i].requestContent,
+													requestTime: res.result.data[i].requestTime,
+													requestType: res.result.data[i].requestType,
+													timeRequire: res.result.data[i].timeRequire
+												})
+											else
+												unsolvedRequest_3.push({
+													requestContent: res.result.data[i].requestContent,
+													requestTime: res.result.data[i].requestTime,
+													requestType: res.result.data[i].requestType,
+													timeRequire: res.result.data[i].timeRequire
+												})
+										}
+									}
+								}
+								this.solvedRequest = solvedRequest2
+								this.unsolvedRequest = unsolvedRequest_
+								this.unsolvedRequest2 = unsolvedRequest_2
+								this.unsolvedRequest3 = unsolvedRequest_3
 							}
-						}
-						this.unsolvedRequest = unsolvedRequest2
-					}).catch((err)=>{
-					    console.log(err.code)
-						console.log(err.message)
+						}).catch((err)=>{
+							console.log(err.code)
+							console.log(err.message)
+						})
 					})
-				}).catch((err)=>{
-					console.log(err.code)
-					console.log(err.message)
-				})
+				}
+				else {
+					uni.showToast({
+						title: '请求提交失败',
+						icon: 'error'
+					})
+				}
+			},
+			change2(e) {
+				console.log(this.range2[e].text)
+			},
+			change3(e) {
+				console.log(this.range3[e].text)
 			}
 		}
 	}
@@ -153,5 +300,27 @@
 	
 	.btn-submit {
 		margin-top: 5px;
+	}
+	
+	.requestType {
+		margin-top: 5px;
+	}
+	
+	.timeRequire {
+		margin-top: 5px;
+	}
+	
+	.tag {
+		margin-bottom: 5px;
+	}
+	
+	.tag2 {
+		margin-top: 10px;
+		margin-bottom: 5px;
+	}
+	
+	.tag3 {
+		margin-top: 10px;
+		margin-bottom: 5px;
 	}
 </style>

@@ -35,6 +35,14 @@
 		"responseTime": {
 			"bsonType": "timestamp",
 			"title": "回复的时间"
+		},
+		"requestType": {
+			"bsonType": "string",
+			"title": "请求类型"
+		},
+		"timeRequire": {
+			"bsonType": "string",
+			"title": "时效要求"
 		}
 	}
 }
