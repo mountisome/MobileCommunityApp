@@ -3,7 +3,7 @@
 		<view class="login-form-content">
 			<view class="input-item flex align-center">
 				<view class="iconfont icon-user icon"></view>
-				<input v-model="loginForm.username" class="input" type="text" placeholder="请输入账号" maxlength="30" />
+				<input v-model="loginForm.name" class="input" type="text" placeholder="请输入账号" maxlength="30" />
 			</view>
 			<view class="input-item flex align-center">
 				<view class="iconfont icon-password icon"></view>
@@ -28,7 +28,7 @@
 		data() {
 			return {
 				loginForm: {
-				  username: '',
+				  name: '',
 				  password: ''
 				},
 				pwd: '',
@@ -38,7 +38,7 @@
 		methods: {
 			// 登录方法
 			handleLogin() {
-				if (this.loginForm.username === '') {
+				if (this.loginForm.name === '') {
 					uni.showToast({
 						title: '账号不能为空',
 						icon: 'error'
@@ -50,7 +50,7 @@
 					})
 				} else {
 					const db = uniCloud.database()
-					db.collection('user').where({name: this.loginForm.username}).get().then((res)=>{
+					db.collection('user').where({name: this.loginForm.name}).get().then((res)=>{
 						if (res.result.data[0] === undefined) {
 							uni.showToast({
 								title: '用户不存在',
@@ -65,12 +65,16 @@
 								})
 							} else {
 								uni.setStorage({
-									key: 'username',
-									data: this.loginForm.username
+									key: 'name',
+									data: this.loginForm.name
 								})
 								uni.setStorage({
 									key: 'password',
 									data: res.result.data[0].password
+								})
+								uni.setStorage({
+									key: 'username',
+									data: res.result.data[0].username
 								})
 								uni.setStorage({
 									key: 'image',
@@ -81,12 +85,12 @@
 									data: res.result.data[0].phone
 								})
 								uni.setStorage({
-									key: 'community',
-									data: res.result.data[0].community
-								})
-								uni.setStorage({
 									key: 'building',
 									data: res.result.data[0].building
+								})
+								uni.setStorage({
+									key: 'household',
+									data: res.result.data[0].household
 								})
 								uni.setStorage({
 									key: 'fee',

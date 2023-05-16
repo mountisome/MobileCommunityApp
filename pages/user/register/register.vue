@@ -4,7 +4,7 @@
 			<view class="register-form-content">
 				<view class="input-item flex align-center">
 					<view class="iconfont icon-user icon"></view>
-					<input v-model="username" class="input" type="text" placeholder="请输入账号" maxlength="30" />
+					<input v-model="name" class="input" type="text" placeholder="请输入账号" maxlength="30" />
 				</view>
 				<view class="input-item flex align-center">
 					<view class="iconfont icon-password icon"></view>
@@ -26,7 +26,7 @@
 	export default {
 		data() {
 			return {
-				username: '',
+				name: '',
 				password: '',
 				phone: ''
 			}
@@ -34,7 +34,7 @@
 		methods: {
 			// 注册方法
 			handleRegister() {
-				if (this.username === '') {
+				if (this.name === '') {
 					uni.showToast({
 						title: '账号不能为空',
 						icon: 'error'
@@ -51,20 +51,21 @@
 					})
 				} else {
 					const db = uniCloud.database();
-					db.collection('user').where({name: this.username}).get().then((res)=>{
-						if (res.result.data[0] !== undefined || this.username === "ALL") {
+					db.collection('user').where({name: this.name}).get().then((res)=>{
+						if (res.result.data[0] !== undefined || this.name === "ALL") {
 							uni.showToast({
 								title: '用户已存在',
 								icon: 'error'
 							})
 						} else {
 							db.collection('user').add({
-								name: this.username,
+								name: this.name,
 								password: this.password,
+								username: '孙先生',
 								phone: this.phone,
 								image: "",
-								community: "A小区",
-								building: "1幢",
+								building: "1栋",
+								household: "1801",
 								fee: 0
 							}).then((res) => {
 								uni.showToast({

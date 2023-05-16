@@ -113,6 +113,7 @@
 				value: '',
 				value2: -1,
 				value3: -1,
+				name: '',
 				username: '',
 				solvedRequest: [],
 				unsolvedRequest: [],
@@ -132,6 +133,7 @@
 			}
 		},
 		onLoad() {
+			this.name = uni.getStorageSync('name')
 			this.username = uni.getStorageSync('username')
 			this.image1 = uni.getStorageSync('image')
 			const db = uniCloud.database()
@@ -143,7 +145,7 @@
 					let unsolvedRequest_2 = []
 					let unsolvedRequest_3 = []
 					for (let i = 0; i < len; i++) {
-						if (res.result.data[i].name == this.username) {
+						if (res.result.data[i].name == this.name) {
 							if (res.result.data[i].solved) {
 								solvedRequest2.push({
 									requestContent: res.result.data[i].requestContent,
@@ -194,7 +196,8 @@
 					let timestamp = new Date().getTime()
 					const db = uniCloud.database()
 					db.collection('request').add({
-						name: this.username,
+						name: this.name,
+						username: this.username,
 						requestContent: this.value,
 						requestTime: timestamp,
 						solved: false,
@@ -216,7 +219,7 @@
 								let unsolvedRequest_2 = []
 								let unsolvedRequest_3 = []
 								for (let i = 0; i < len; i++) {
-									if (res.result.data[i].name == this.username) {
+									if (res.result.data[i].name == this.name) {
 										if (res.result.data[i].solved) {
 											solvedRequest2.push({
 												requestContent: res.result.data[i].requestContent,

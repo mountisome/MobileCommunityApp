@@ -13,7 +13,7 @@
 		},
 		"name": {
 			"bsonType": "string",
-			"title": "用户名"
+			"title": "账号"
 		},
 		"password": {
 			"bsonType": "string",

@@ -106,10 +106,11 @@
 	export default {
 		data() {
 			return {
-				username: 'user',
+				name: 'user',
+				username: '',
 				image: '/static/images/user.png',
 				identity: '',
-				adminname: '',
+				adminname: '社区物业',
 				marketname: '',
 				image2: '/static/images/user.png',
 				image3: '/static/images/user.png'
@@ -117,12 +118,10 @@
 		},
 		onLoad() {
 			this.identity = uni.getStorageSync('identity')
-			if (uni.getStorageSync('username') !== '') {
+			if (uni.getStorageSync('name') !== '') {
 				this.username = uni.getStorageSync('username')
 				this.image = uni.getStorageSync('image')
 			}
-			if (uni.getStorageSync('adminname') !== '')
-				this.adminname = uni.getStorageSync('adminname')
 			if (uni.getStorageSync('marketname') !== '') {
 				this.marketname = uni.getStorageSync('marketname')
 				this.image3 = uni.getStorageSync('image3')
@@ -138,7 +137,7 @@
 							let filePath = res.tempFilePaths[0]
 							uniCloud.uploadFile({
 								filePath: filePath,
-								cloudPath: uni.getStorageSync('username') + '.jpg',
+								cloudPath: uni.getStorageSync('name') + '.jpg',
 								onUploadProgress:function(progressEvent){
 									console.log(progressEvent)
 									var percentCompleted = Math.round(

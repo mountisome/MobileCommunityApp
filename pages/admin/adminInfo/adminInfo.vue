@@ -12,14 +12,13 @@
 	export default {
 		data() {
 			return {
-				adminname: '',
+				adminname: '社区物业',
 				phone: '',
 				community: ''
 			};
 		},
 		onLoad() {
 			if (uni.getStorageSync('adminname') !== '') {
-				this.adminname = uni.getStorageSync('adminname')
 				this.phone = uni.getStorageSync('phone')
 				this.community = uni.getStorageSync('community')
 			}

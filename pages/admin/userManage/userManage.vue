@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<uni-list v-for="(user, index) in userList" :key="user.name" :border="true">
-			<uni-list-chat :title="user.name" :avatar="user.image"
+			<uni-list-chat :title="user.username" :avatar="user.image"
 				:note="user.phone">
 				<view class="chat-custom-right">
 					<view>
@@ -51,6 +51,7 @@
 					for (let i = 0; i < len; i++) {
 						userList2.push({
 							name: res.result.data[i].name,
+							username: res.result.data[i].username,
 							phone: res.result.data[i].phone,
 							image: res.result.data[i].image
 						})
@@ -58,7 +59,7 @@
 					this.userList = userList2
 				})
 			},
-			deleteUser(username) {
+			deleteUser(name) {
 				uni.showModal({
 					title: '提示',
 					content: '确认删除？',
@@ -66,7 +67,7 @@
 						if (res.confirm) {
 							const db = uniCloud.database()
 							db.collection('user').where({
-								name: username
+								name: name
 							}).remove().then((res)=>{
 								uni.showToast({
 									title: '用户删除成功',
@@ -98,6 +99,7 @@
 				for (let i = 0; i < len; i++)
 					userList2.push({
 						name: res.result.data[i].name,
+						username: res.result.data[i].username,
 						phone: res.result.data[i].phone,
 						image: res.result.data[i].image
 					})
@@ -112,6 +114,7 @@
 				for (let i = 0; i < len; i++)
 					userList2.push({
 						name: res.result.data[i].name,
+						username: res.result.data[i].username,
 						phone: res.result.data[i].phone,
 						image: res.result.data[i].image
 					})

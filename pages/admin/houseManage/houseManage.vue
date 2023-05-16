@@ -14,23 +14,23 @@
 			return {
 				houseList: [
 					{
-						text: '1幢',
+						text: '1栋',
 						url: '/static/images/house/house1.jpeg'
 					},
 					{
-						text: '2幢',
+						text: '2栋',
 						url: '/static/images/house/house2.jpg'
 					},
 					{
-						text: '3幢',
+						text: '3栋',
 						url: '/static/images/house/house3.jpeg'
 					},
 					{
-						text: '4幢',
+						text: '4栋',
 						url: '/static/images/house/house4.jpeg'
 					},
 					{
-						text: '5幢',
+						text: '5栋',
 						url: '/static/images/house/house5.jpeg'
 					}
 				]

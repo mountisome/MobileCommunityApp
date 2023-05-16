@@ -8,7 +8,7 @@
 				<uni-tag text="紧急" type="error"/>
 			</view>
 			<uni-list v-for="(request, index) in requestList">
-				<uni-card :title="request.name">
+				<uni-card :title="request.username">
 					<view>
 					<text class="text-black text-bold">{{request.requestContent}}</text>
 					</view>
@@ -28,7 +28,7 @@
 				<uni-tag text="尽快" type="warning"/>
 			</view>
 			<uni-list v-for="(request, index) in requestList2">
-				<uni-card :title="request.name">
+				<uni-card :title="request.username">
 					<view>
 					<text class="text-black text-bold">{{request.requestContent}}</text>
 					</view>
@@ -48,7 +48,7 @@
 				<uni-tag text="正常" type="primary"/>
 			</view>
 			<uni-list v-for="(request, index) in requestList3">
-				<uni-card :title="request.name">
+				<uni-card :title="request.username">
 					<view>
 					<text class="text-black text-bold">{{request.requestContent}}</text>
 					</view>
@@ -99,6 +99,7 @@
 								if (res.result.data[i].timeRequire === "紧急")
 									requestList_.push({
 										name: res.result.data[i].name,
+										username: res.result.data[i].username,
 										requestContent: res.result.data[i].requestContent,
 										requestTime: res.result.data[i].requestTime,
 										value: '',
@@ -107,6 +108,7 @@
 								else if (res.result.data[i].timeRequire === "尽快")
 									requestList_2.push({
 										name: res.result.data[i].name,
+										username: res.result.data[i].username,
 										requestContent: res.result.data[i].requestContent,
 										requestTime: res.result.data[i].requestTime,
 										value: '',
@@ -115,6 +117,7 @@
 								else
 									requestList_3.push({
 										name: res.result.data[i].name,
+										username: res.result.data[i].username,
 										requestContent: res.result.data[i].requestContent,
 										requestTime: res.result.data[i].requestTime,
 										value: '',
@@ -145,6 +148,7 @@
 						if (res.result.data[i].timeRequire === "紧急")
 							requestList_.push({
 								name: res.result.data[i].name,
+								username: res.result.data[i].username,
 								requestContent: res.result.data[i].requestContent,
 								requestTime: res.result.data[i].requestTime,
 								value: '',
@@ -153,6 +157,7 @@
 						else if (res.result.data[i].timeRequire === "尽快")
 							requestList_2.push({
 								name: res.result.data[i].name,
+								username: res.result.data[i].username,
 								requestContent: res.result.data[i].requestContent,
 								requestTime: res.result.data[i].requestTime,
 								value: '',
@@ -161,6 +166,7 @@
 						else
 							requestList_3.push({
 								name: res.result.data[i].name,
+								username: res.result.data[i].username,
 								requestContent: res.result.data[i].requestContent,
 								requestTime: res.result.data[i].requestTime,
 								value: '',

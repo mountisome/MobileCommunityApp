@@ -2,7 +2,7 @@
 	<view>
 		<uni-section class="mb-10" title="已缴费" type="line">
 			<uni-list v-for="(user, index) in paidList">
-				<uni-list-item :title="user.name" :rightText="user.paid"></uni-list-item>
+				<uni-list-item :title="user.username" :rightText="user.paid"></uni-list-item>
 			</uni-list>
 		</uni-section>
 	</view>
@@ -12,7 +12,7 @@
 			  <view class="decoration"></view>
 			</template>
 			<uni-list v-for="(user, index) in unpaidList">
-				<uni-list-item :title="user.name" :note="'物业费:'+user.fee">
+				<uni-list-item :title="user.username" :note="'物业费:'+user.fee">
 					<template v-slot:footer>
 						<view>
 							<button size="mini" type="primary" plain="true" 
@@ -81,11 +81,13 @@
 									if (res.result.data[i].fee === 0) {
 										paidList2.push({
 											name: res.result.data[i].name,
+											username: res.result.data[i].username,
 											paid: '已缴'
 										})
 									} else {
 										unpaidList2.push({
 											name: res.result.data[i].name,
+											username: res.result.data[i].username,
 											fee: res.result.data[i].fee.toString()
 										})
 									}
@@ -115,11 +117,13 @@
 						if (res.result.data[i].fee === 0) {
 							paidList2.push({
 								name: res.result.data[i].name,
+								username: res.result.data[i].username,
 								paid: '已缴'
 							})
 						} else {
 							unpaidList2.push({
 								name: res.result.data[i].name,
+								username: res.result.data[i].username,
 								fee: res.result.data[i].fee.toString()
 							})
 						}
