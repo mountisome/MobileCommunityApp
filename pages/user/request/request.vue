@@ -115,6 +115,8 @@
 				value3: -1,
 				name: '',
 				username: '',
+				building: '',
+				household: '',
 				solvedRequest: [],
 				unsolvedRequest: [],
 				unsolvedRequest2: [],
@@ -135,6 +137,8 @@
 		onLoad() {
 			this.name = uni.getStorageSync('name')
 			this.username = uni.getStorageSync('username')
+			this.building = uni.getStorageSync('building')
+			this.household = uni.getStorageSync('household')
 			this.image1 = uni.getStorageSync('image')
 			const db = uniCloud.database()
 			db.collection('request').get().then((res)=>{
@@ -197,7 +201,7 @@
 					const db = uniCloud.database()
 					db.collection('request').add({
 						name: this.name,
-						username: this.username,
+						username: this.building+'-'+this.household+'-'+this.username,
 						requestContent: this.value,
 						requestTime: timestamp,
 						solved: false,

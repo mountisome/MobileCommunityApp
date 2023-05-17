@@ -108,6 +108,8 @@
 			return {
 				name: 'user',
 				username: '',
+				building: '',
+				household: '',
 				image: '/static/images/user.png',
 				identity: '',
 				adminname: '社区物业',
@@ -121,6 +123,9 @@
 			if (uni.getStorageSync('name') !== '') {
 				this.username = uni.getStorageSync('username')
 				this.image = uni.getStorageSync('image')
+				this.building = uni.getStorageSync('building')
+				this.household = uni.getStorageSync('household')
+				this.username = this.building + '-' + this.household + '-' + this.username
 			}
 			if (uni.getStorageSync('marketname') !== '') {
 				this.marketname = uni.getStorageSync('marketname')

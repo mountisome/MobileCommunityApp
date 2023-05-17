@@ -81,13 +81,13 @@
 									if (res.result.data[i].fee === 0) {
 										paidList2.push({
 											name: res.result.data[i].name,
-											username: res.result.data[i].username,
+											username: res.result.data[i].building+'-'+res.result.data[i].household+'-'+res.result.data[i].username,
 											paid: '已缴'
 										})
 									} else {
 										unpaidList2.push({
 											name: res.result.data[i].name,
-											username: res.result.data[i].username,
+											username: res.result.data[i].building+'-'+res.result.data[i].household+'-'+res.result.data[i].username,
 											fee: res.result.data[i].fee.toString()
 										})
 									}
@@ -117,13 +117,13 @@
 						if (res.result.data[i].fee === 0) {
 							paidList2.push({
 								name: res.result.data[i].name,
-								username: res.result.data[i].username,
+								username: res.result.data[i].building+'-'+res.result.data[i].household+'-'+res.result.data[i].username,
 								paid: '已缴'
 							})
 						} else {
 							unpaidList2.push({
 								name: res.result.data[i].name,
-								username: res.result.data[i].username,
+								username: res.result.data[i].building+'-'+res.result.data[i].household+'-'+res.result.data[i].username,
 								fee: res.result.data[i].fee.toString()
 							})
 						}

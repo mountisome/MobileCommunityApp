@@ -51,7 +51,7 @@
 					for (let i = 0; i < len; i++) {
 						userList2.push({
 							name: res.result.data[i].name,
-							username: res.result.data[i].username,
+							username: res.result.data[i].building+'-'+res.result.data[i].household+'-'+res.result.data[i].username,
 							phone: res.result.data[i].phone,
 							image: res.result.data[i].image
 						})
@@ -99,7 +99,7 @@
 				for (let i = 0; i < len; i++)
 					userList2.push({
 						name: res.result.data[i].name,
-						username: res.result.data[i].username,
+						username: res.result.data[i].building+'-'+res.result.data[i].household+'-'+res.result.data[i].username,
 						phone: res.result.data[i].phone,
 						image: res.result.data[i].image
 					})
@@ -114,7 +114,7 @@
 				for (let i = 0; i < len; i++)
 					userList2.push({
 						name: res.result.data[i].name,
-						username: res.result.data[i].username,
+						username: res.result.data[i].building+'-'+res.result.data[i].household+'-'+res.result.data[i].username,
 						phone: res.result.data[i].phone,
 						image: res.result.data[i].image
 					})

@@ -1,7 +1,7 @@
 <template>
 	<view class="fee">
 		<uni-list border-full>
-			<uni-list-item title="用户名:"  :rightText="username"/>
+			<uni-list-item title="用户名:"  :rightText="building+'-'+household+'-'+username"/>
 			<uni-list-item title="物业费:" :rightText="fee"/>
 		</uni-list>
 	</view>
@@ -17,13 +17,19 @@
 				range: ['', ''],
 				date1: '',
 				date2: '',
+				name: '',
 				username: 'user',
+				building: '',
+				household: '',
 				fee: ''
 			}
 		},
 		onLoad() {
-			if (uni.getStorageSync('username') !== '') {
+			if (uni.getStorageSync('name') !== '') {
+				this.name = uni.getStorageSync('name')
 				this.username = uni.getStorageSync('username')
+				this.building = uni.getStorageSync('building')
+				this.household = uni.getStorageSync('household')
 				this.fee = uni.getStorageSync('fee').toString()
 			}
 		},
@@ -32,7 +38,7 @@
 				var timestamp = new Date().getTime()
 				const db = uniCloud.database()
 				db.collection('notice').add({
-				    info: this.username + '已缴费',
+				    info: this.name + '已缴费',
 				    time: timestamp,
 					name: 'admin'
 				}).then((res)=>{
