@@ -125,7 +125,8 @@
 					{value: 0, text: '水'},
 					{value: 1, text: '电'},
 					{value: 2, text: '燃气'},
-					{value: 3, text: '其他'}
+					{value: 3, text: '商品'},
+					{value: 4, text: '其他'}
 				],
 				range3: [
 					{value: 0, text: '紧急'},

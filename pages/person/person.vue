@@ -152,17 +152,18 @@
 								success(res) {
 									let imageUrl = res.fileID
 									const db = uniCloud.database()
-									let collection = db.collection("user")
-									let ans = collection.where({name: uni.getStorageSync('username')}).update({
+									db.collection("user").where({name: uni.getStorageSync('name')})
+									.update({
 										image: imageUrl
+									}).then((res)=> {
+										uni.showToast({
+											title: '图片上传成功',
+											icon: 'success'
+										})
+										const page = getCurrentPages()[0]
+										const vm = page.$vm
+										vm.$data.image = imageUrl
 									})
-									uni.showToast({
-										title: '图片上传成功',
-										icon: 'success'
-									})
-									const page = getCurrentPages()[0]
-									const vm = page.$vm
-									vm.$data.image = imageUrl
 								},
 								fail() {
 									uni.showToast({
